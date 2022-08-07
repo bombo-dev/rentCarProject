@@ -2,10 +2,11 @@ package com.bomtech.rentalcarproject.controller;
 
 import com.bomtech.rentalcarproject.dto.CarBrandDTO;
 import com.bomtech.rentalcarproject.dto.CarCategoryDTO;
-import com.bomtech.rentalcarproject.mapper.CarBrandMapper;
-import com.bomtech.rentalcarproject.mapper.CarBrandMapperImpl;
-import com.bomtech.rentalcarproject.mapper.CarCategoryMapper;
-import com.bomtech.rentalcarproject.mapper.CarCategoryMapperImpl;
+import com.bomtech.rentalcarproject.mapper.*;
+import com.bomtech.rentalcarproject.service.AppearanceNameToAppearanceNumService;
+import com.bomtech.rentalcarproject.service.BrandNameToBrandNumService;
+import com.bomtech.rentalcarproject.service.FuelNameToFuelNumService;
+import com.bomtech.rentalcarproject.service.RawNameToRawNumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,15 +17,46 @@ import java.util.List;
 @Controller
 public class AdminPageController {
 
-    private CarCategoryMapper carCategoryMapper;
+    private final CarCategoryMapper carCategoryMapper;
+    private final AppearanceNameToAppearanceNumService appearanceNameToAppearanceNumService;
+    private final BrandNameToBrandNumService brandNameToBrandNumService;
+    private final RawNameToRawNumService rawNameToRawNumService;
+    private final FuelNameToFuelNumService fuelNameToFuelNumService;
+
 
     @Autowired
-    public AdminPageController(CarCategoryMapper carCategoryMapper) {
+    public AdminPageController(CarCategoryMapper carCategoryMapper,
+                               AppearanceNameToAppearanceNumService appearanceNameToAppearanceNumService,
+                               BrandNameToBrandNumService brandNameToBrandNumService,
+                               RawNameToRawNumService rawNameToRawNumService,
+                               FuelNameToFuelNumService fuelNameToFuelNumService) {
         this.carCategoryMapper = carCategoryMapper;
+        this.appearanceNameToAppearanceNumService = appearanceNameToAppearanceNumService;
+        this.brandNameToBrandNumService = brandNameToBrandNumService;
+        this.rawNameToRawNumService = rawNameToRawNumService;
+        this.fuelNameToFuelNumService = fuelNameToFuelNumService;
     }
 
     @RequestMapping("/")
     public String index() {
+
+        if(BrandNameToBrandNumService.BrandList.size() == 0){
+            brandNameToBrandNumService.setBrandList();
+        }
+
+        if(AppearanceNameToAppearanceNumService.carAppearanceList.size() == 0){
+            appearanceNameToAppearanceNumService.setAppearanceList();
+        }
+
+        if(RawNameToRawNumService.carRawList.size() == 0){
+            rawNameToRawNumService.setRawList();
+        }
+
+        if(FuelNameToFuelNumService.carFuelList.size() == 0){
+            fuelNameToFuelNumService.setFuelList();
+        }
+
+
         return "/index";
     }
 
@@ -53,6 +85,16 @@ public class AdminPageController {
 
         req.setAttribute("listCategory", list);
 
+        return "/admin/list";
+    }
+
+    @RequestMapping("/category_find.do")
+    public String categoryFind(HttpServletRequest req){
+        String search = req.getParameter("column");
+        String searchString = req.getParameter("find_text");
+
+        List<CarCategoryDTO> list = carCategoryMapper.findCategory(search, searchString);
+        req.setAttribute("listCategory", list);
         return "/admin/list";
     }
 }
