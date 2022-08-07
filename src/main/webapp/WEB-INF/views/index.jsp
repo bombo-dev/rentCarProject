@@ -100,7 +100,7 @@
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Features</a>
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Enterprise</a>
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Support</a>
-                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Pricing</a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="product_index.do">Pricing</a>
                 <a class="py-2 text-dark text-decoration-none" href="admin_index.do">Admin</a>
             </nav>
         </div>
