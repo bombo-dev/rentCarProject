@@ -20,7 +20,6 @@
         <table border="1">
             <tr>
                 <td>
-                    코드 : <input type="text" name="car_code"><br>
                     차종 : <input type="text" name="car_name"><br>
                     브랜드 : <input type="text" name="brand"><br>
                     외형 : <input type="text" name="appearance"><br>
@@ -53,8 +52,10 @@
                 <td>
                     <select name="column">
                         <option value="brand">브랜드</option>
+                        <option value="car_name">차 이름</option>
                         <option value="appearance">외형</option>
                         <option value="use">용도</option>
+                        <option value="fuel">연료</option>
                     </select>
                 </td>
                 <td>
