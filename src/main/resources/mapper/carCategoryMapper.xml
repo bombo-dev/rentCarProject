@@ -14,11 +14,15 @@
     </select>
 
     <select id="findCategory" resultType="CarCategoryDTO" parameterType="Map">
-        select * from CAR_CATEGORY where ${search} = #{searchString}
+        select * from CAR_CATEGORY where ${search} LIKE '%'||#{searchString} || '%'
     </select>
 
     <delete id="deleteCategory" parameterType="int">
         delete * from CAR_CATEGORY where NUM = #{NUM}
     </delete>
+
+    <select id="checkCarCode" parameterType="String" resultType="String">
+        SELECT CAR_CODE FROM CAR_CATEGORY WHERE SUBSTR(CAR_CODE, 1, 8) = #{checkCode}
+    </select>
 
 </mapper>
