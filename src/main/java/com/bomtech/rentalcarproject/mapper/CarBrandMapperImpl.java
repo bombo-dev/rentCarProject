@@ -16,7 +16,6 @@ public class CarBrandMapperImpl implements CarBrandMapper {
     @Override
     public List<CarBrandDTO> listBrand() {
         List<CarBrandDTO> list = sqlSession.selectList("listBrand");
-        System.out.println("Mapper : " + list);
         return sqlSession.selectList("listBrand");
     }
 }
