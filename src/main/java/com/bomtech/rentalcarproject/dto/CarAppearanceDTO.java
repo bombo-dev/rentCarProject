@@ -2,15 +2,15 @@ package com.bomtech.rentalcarproject.dto;
 
 public class CarAppearanceDTO {
 
-    private String appearance;
+    private String appearance_name;
     private String appearance_num;
 
-    public String getAppearance() {
-        return appearance;
+    public String getAppearance_name() {
+        return appearance_name;
     }
 
-    public void setAppearance(String appearance) {
-        this.appearance = appearance;
+    public void setAppearance_name(String appearance_name) {
+        this.appearance_name = appearance_name;
     }
 
     public String getAppearance_num() {
