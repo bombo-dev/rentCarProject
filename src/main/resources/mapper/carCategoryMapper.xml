@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rentalcarproject.mapper.carCategoryMapper">
+
+    <insert id="insertCategory" parameterType="CarCategoryDTO">
+        INSERT INTO CAR_CATEGORY VALUES (CATEGORY_SEQ.NEXTVAL, #{car_code}, #{car_name}, #{brand}, #{appearance}, #{use}, #{fuel})
+    </insert>
+
+    <select id="listCategory" resultType="CarCategoryDTO">
+        select * from CAR_CATEGORY
+    </select>
+
+    <select id="findCategory" resultType="CarCategoryDTO" parameterType="Map">
+        select * from CAR_CATEGORY where ${search} = #{searchString}
+    </select>
+
+    <delete id="deleteCategory" parameterType="int">
+        delete * from CAR_CATEGORY where NUM = #{NUM}
+    </delete>
+
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rentalcarproject.mapper.carProductMapper">
+    <insert id="insertProduct" parameterType="CarProductDTO">
+        INSERT INTO CAR_PRODUCT VALUES(product_seq.NEXTVAL, #{car_num}, #{car_code}, #{car_name}, #{car_color}, #{reservation}, #{rent_price}, #{car_image})
+    </insert>
+
+    <update id="reservationProduct" parameterType="CarProductDTO">
+        UPDATE CAR_PRODUCT SET reservation = #{reservation} where CAR_CODE = #{CAR_CODE}
+    </update>
+
+    <select id ="listProduct" resultType="CarProductDTO">
+        SELECT * FROM CAR_PRODUCT;
+    </select>
+</mapper>
