@@ -25,4 +25,8 @@
         SELECT CAR_CODE FROM CAR_CATEGORY WHERE SUBSTR(CAR_CODE, 1, 8) = #{checkCode}
     </select>
 
+    <select id="getCarCode" parameterType="int" resultType="String">
+        SELECT CAR_CODE FROM CAR_CATEGORY WHERE NUM = #{num}
+    </select>
+
 </mapper>
