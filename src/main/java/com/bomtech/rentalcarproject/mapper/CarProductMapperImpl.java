@@ -5,8 +5,9 @@ import com.bomtech.rentalcarproject.dto.CarProductDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarProductMapperImpl implements CarProductMapper {
@@ -21,11 +22,36 @@ public class CarProductMapperImpl implements CarProductMapper {
 
     @Override
     public int insertProduct(CarProductDTO dto) {
-        CarCategoryMapper carCategoryMapper = new CarCategoryMapperImpl();
-        List<CarCategoryDTO> categoryDTO = carCategoryMapper.findCategory("car_name", dto.getCar_name());
+        String checkCode;
+        String lastCarCode;
 
+        Map<String, String> map = new Hashtable<>();
+        map.put("search", "car_name");
+        map.put("searchString", dto.getCar_name());
+        List<CarCategoryDTO> categoryDTO = sqlSession.selectList("findCategory", map);
+
+
+        if (categoryDTO.size() == 0){
+            // ProductController에 -1 들어왔을 때 다시 메세지 전달
+            return -1;
+        }
+        else {
+            checkCode = sqlSession.selectOne("getCarCode", categoryDTO.get(0).getNum());
+            List<String> sameCarCategoryList = sqlSession.selectList("productCheckCarCode", checkCode);
+            if(sameCarCategoryList.size() == 0){
+                lastCarCode = checkCode + "00";
+            } else {
+                String value = sameCarCategoryList.get(sameCarCategoryList.size() - 1);
+                value = value.substring(value.length() - 2, value.length());
+                int toValue = Integer.parseInt(value) + 1;
+                String lastValue = String.format("%02d", toValue);
+                lastCarCode = checkCode + lastValue;
+            }
+        }
         dto.setCar_num(categoryDTO.get(0).getNum());
-        return 0;
+        dto.setCar_code(lastCarCode);
+
+        return sqlSession.insert("insertProduct", dto);
     }
 
     @Override
