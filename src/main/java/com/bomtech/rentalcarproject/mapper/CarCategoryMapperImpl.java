@@ -83,6 +83,10 @@ public class CarCategoryMapperImpl implements CarCategoryMapper{
         return sqlSession.selectList("findCategory", map);
     }
 
+    public String getCarCode(int num){
+        return sqlSession.selectOne("getCarCode", num);
+    }
+
     public int deleteCategory(int cate_code){
         return sqlSession.delete("deleteCategory", cate_code);
     }
