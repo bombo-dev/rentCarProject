@@ -12,4 +12,5 @@ public interface CarCategoryMapper {
     List<CarCategoryDTO> listCategory();
     List<CarCategoryDTO> findCategory(String search, String searchString);
     int deleteCategory(int cate_code);
+    String getCarCode(int num);
 }
