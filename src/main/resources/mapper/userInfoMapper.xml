@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="rentalcarproject.mapper.userInfoMapper">
+    <insert id="userInfoInsert" parameterType="UserInfoDTO">
+        INSERT INTO USER_INFO VALUES(USER_SEQ.nextval, #{name}, #{email}, #{passwd}, #{phone}, 0, sysdate, #{birth})
+    </insert>
+</mapper>
