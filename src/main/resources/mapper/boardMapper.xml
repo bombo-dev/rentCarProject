@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bomtech.rentalcarproject.mapper.board.BoardMapper">
+
+    <select id="boardList" resultType="BoardDTO">
+        SELECT * FROM BOARD WHERE CATEGORY = 'normal' ORDER BY NUM DESC
+    </select>
+
+    <select id="noticeList" resultType="BoardDTO">
+        SELECT * FROM BOARD WHERE category = 'notice'
+    </select>
+
+    <insert id="boardInsert" parameterType="BoardDTO">
+        INSERT INTO BOARD VALUES (BOARD_SEQ.nextval, #{writer}, #{title}, sysdate, #{content}, 0, #{ip}, #{category})
+    </insert>
+
+    <select id="boardListAll" resultType="BoardDTO" parameterType="map">
+        SELECT * FROM (SELECT ROWNUM AS R, A.* FROM (SELECT * FROM BOARD ORDER BY NUM DESC) A) WHERE CATEGORY = 'normal' AND R BETWEEN #{first} AND #{last}
+    </select>
+
+    <select id="boardCount" resultType="int">
+        SELECT COUNT(*) AS COUNT FROM BOARD
+    </select>
+
+</mapper>
